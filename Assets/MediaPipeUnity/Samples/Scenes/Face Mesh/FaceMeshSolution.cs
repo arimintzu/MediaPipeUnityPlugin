@@ -86,7 +86,10 @@ namespace Mediapipe.Unity.FaceMesh
       _faceRectsFromLandmarksAnnotationController.DrawNow(faceRectsFromLandmarks);
       _faceRectsFromDetectionsAnnotationController.DrawNow(faceRectsFromDetections);
       if (faceBlendShapes != null)
-        Debug.Log($"Blendshapes count {faceBlendShapes.Classification.Count}");
+      {
+        //Debug.Log($"Blendshapes count {faceBlendShapes.Classification.Count}");
+        OnBlendshapeOutput?.Invoke(faceBlendShapes);
+      }
     }
 
     private void OnFaceDetectionsOutput(object stream, OutputEventArgs<List<Detection>> eventArgs)
@@ -109,9 +112,68 @@ namespace Mediapipe.Unity.FaceMesh
       _faceRectsFromDetectionsAnnotationController.DrawLater(eventArgs.value);
     }
 
+    public System.Action<ClassificationList> OnBlendshapeOutput;
     private void OnFaceClassificationsFromBlendShapesOutput(object stream, OutputEventArgs<ClassificationList> eventArgs)
     {
-      Debug.Log($"Blendshapes count {eventArgs.value?.Classification?.Count}");
+      //OnBlendshapeOutput?.Invoke(eventArgs?.value);
     }
+
+  }
+
+  public enum BlendShapeLocation
+  {
+    _neutral
+  , browDownLeft
+  , browDownRight
+  , browInnerUp
+  , browOuterUpLeft
+  , browOuterUpRight
+  , cheekPuff
+  , cheekSquintLeft
+  , cheekSquintRight
+  , eyeBlinkLeft
+  , eyeBlinkRight
+  , eyeLookDownLeft
+  , eyeLookDownRight
+  , eyeLookInLeft
+  , eyeLookInRight
+  , eyeLookOutLeft
+  , eyeLookOutRight
+  , eyeLookUpLeft
+  , eyeLookUpRight
+  , eyeSquintLeft
+  , eyeSquintRight
+  , eyeWideLeft
+  , eyeWideRight
+  , jawForward
+  , jawLeft
+  , jawOpen
+  , jawRight
+  , mouthClose
+  , mouthDimpleLe
+  , mouthDimpleRight
+  , mouthFrownLe
+  , mouthFrownRight
+  , mouthFunnel
+  , mouthLeft
+  , mouthLowerDownLeft
+  , mouthLowerDownRight
+  , mouthPressLeft
+  , mouthPressRight
+  , mouthPucker
+  , mouthRight
+  , mouthRollLower
+  , mouthRollUpper
+  , mouthShrugLower
+  , mouthShrugUpper
+  , mouthSmileLeft
+  , mouthSmileRight
+  , mouthStretchLeft
+  , mouthStretchRight
+  , mouthUpperUpLeft
+  , mouthUpperUpRight
+  , noseSneerLeft
+  , noseSneerRight
+  , tongueOut
   }
 }
